@@ -14,8 +14,7 @@ public class MultiServer {
             while (true) {
                 Socket socket = s.accept();
                 try {
-                    Thread t = new Thread(new ServeOne(socket));
-                    t.start();
+                    new Thread(new ServeOne(socket)).start();
                 } catch (IOException e) {
                     socket.close();
                 }
