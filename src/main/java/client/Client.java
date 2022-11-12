@@ -39,7 +39,7 @@ class Client extends JFrame implements ActionListener,Runnable {
         add(l6);
         jtf5 = new JTextField(15);
         add(jtf5);
-        jtf5.setText("5000");
+        jtf5.setText("5001");
 
         l1 = new JLabel("Account ID :  ");
         add(l1);
@@ -59,7 +59,7 @@ class Client extends JFrame implements ActionListener,Runnable {
 
         l2 = new JLabel("Message : ");
         add(l2);
-        jtf2 = new JTextField(34);
+        jtf2 = new JTextField(35);
         add(jtf2);
         jtf2.setEditable(false);
 
@@ -70,17 +70,17 @@ class Client extends JFrame implements ActionListener,Runnable {
 
         l8 = new JLabel("Private Message to : ");
         add(l8);
-        jtf7 = new JTextField(15);
+        jtf7 = new JTextField(10);
         add(jtf7);
         jtf7.setEditable(false);
 
         l7 = new JLabel("Private Message : ");
         add(l7);
-        jtf6 = new JTextField(25);
+        jtf6 = new JTextField(35);
         add(jtf6);
         jtf6.setEditable(false);
 
-        jb4 = new JButton("Send Private Message");
+        jb4 = new JButton("Send Privately");
         add(jb4);
         jb4.addActionListener(this);
         jb4.setEnabled(false);
@@ -116,6 +116,8 @@ class Client extends JFrame implements ActionListener,Runnable {
                     jtf4.setEditable(true);
                     jtf5.setEditable(true);
                     jtf1.setEditable(true);
+                    jtf6.setEnabled(false);
+                    jb4.setEnabled(false);
                     socket.close();
                     socket = null;
                 } catch(Exception e) {}
@@ -151,7 +153,7 @@ class Client extends JFrame implements ActionListener,Runnable {
 
                         ObjectOutputStream obj = new ObjectOutputStream(socket.getOutputStream());
                         msg.senderID = jtf1.getText();
-                        msg.msgText = " is now online at "+new Date().toString();
+                        msg.msgText = " is now online at " + new Date().toString();
                         obj.writeObject(msg);
 
                         jtf2.setEditable(true);
@@ -161,6 +163,8 @@ class Client extends JFrame implements ActionListener,Runnable {
                         jtf4.setEditable(false);
                         jtf5.setEditable(false);
                         jtf1.setEditable(false);
+                        jtf6.setEnabled(true);
+                        jb4.setEnabled(true);
 
                         jtf3.setText("Connection established with Server, start chatting");
 
@@ -207,6 +211,8 @@ class Client extends JFrame implements ActionListener,Runnable {
             jtf4.setEditable(true);
             jtf5.setEditable(true);
             jtf1.setEditable(true);
+            jtf6.setEnabled(false);
+            jb4.setEnabled(false);
             jtf3.setText("Connection Lost");
         }
     }

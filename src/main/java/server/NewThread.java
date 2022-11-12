@@ -35,7 +35,7 @@ class NewThread implements Runnable {
                 msg = (ClientMessage)obj.readObject();
 
                 if(msg.senderID != null && msg.msgText != null) {
-                    f.ta.append(msg.senderID+" >> "+msg.msgText+"\n");
+                    f.ta.append(msg.senderID+ " to " + msg.receiverID + " >> "+msg.msgText+"\n"); //显示从谁发给谁
                 }
                 name = msg.senderID;
 
