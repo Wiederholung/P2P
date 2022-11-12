@@ -8,6 +8,7 @@ public class ServeOne implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
 
+
     public ServeOne(Socket s) throws IOException {
         socket = s;
         in = new BufferedReader(new InputStreamReader(
@@ -17,6 +18,7 @@ public class ServeOne implements Runnable {
                         socket.getOutputStream())), true);
 //        start();
     }
+
 
     public void run() {
         try {
@@ -36,4 +38,5 @@ public class ServeOne implements Runnable {
             }
         }
     }
+
 }
