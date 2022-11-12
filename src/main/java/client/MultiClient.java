@@ -10,10 +10,12 @@ public class MultiClient {
     public static void main(String[] args) throws
             IOException,InterruptedException {
         InetAddress addr = InetAddress.getByName(null);
-        while (true) {
-            if (ClientThread.thread_count() < MAX_THREADS)
-                new Thread(new ClientThread(addr)).start();
+        Thread[] threads = new Thread[MAX_THREADS];
+        for (int i = 0; i < MAX_THREADS; i++) {
+            threads[i] = new Thread(new ClientThread(addr));
+            threads[i].start();
             Thread.sleep(100);
         }
+
     }
 }
