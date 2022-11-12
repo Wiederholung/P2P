@@ -8,7 +8,7 @@ class Server {
         Ser f = new Ser("Server");
         f.setLayout(new FlowLayout());
         f.setSize(780,450);
-        f.setResizable(false);
+        f.setResizable(true);
         f.setVisible(true);
     }
 }

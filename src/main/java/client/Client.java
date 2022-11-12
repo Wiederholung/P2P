@@ -17,7 +17,7 @@ class Client extends JFrame implements ActionListener,Runnable {
     TextArea ta;
     ClientMessage msg = new ClientMessage();
     InetAddress host;
-    int port = 5000;
+    int port = 5001;
     Thread t = null;
     JButton jb,jb2,jb3, jb4;
 
@@ -43,7 +43,7 @@ class Client extends JFrame implements ActionListener,Runnable {
 
         add(new JLabel("                    "));
 
-        l1 = new JLabel("Account ID :  ");
+        l1 = new JLabel("Your ID :  ");
         add(l1);
         jtf1 = new JTextField(15);
         add(jtf1);
@@ -78,11 +78,11 @@ class Client extends JFrame implements ActionListener,Runnable {
 
         l7 = new JLabel("Private Message :");
         add(l7);
-        jtf6 = new JTextField(23);
+        jtf6 = new JTextField(17);
         add(jtf6);
         jtf6.setEditable(false);
 
-        jb4 = new JButton("Send");
+        jb4 = new JButton("Send Privately");
         add(jb4);
         jb4.addActionListener(this);
         jb4.setEnabled(false);
@@ -118,6 +118,7 @@ class Client extends JFrame implements ActionListener,Runnable {
                     jtf4.setEditable(true);
                     jtf5.setEditable(true);
                     jtf1.setEditable(true);
+                    jtf7.setEnabled(false);
                     jtf6.setEnabled(false);
                     jb4.setEnabled(false);
                     socket.close();
@@ -125,13 +126,30 @@ class Client extends JFrame implements ActionListener,Runnable {
                 } catch(Exception e) {}
             }
 
-            if(str.equals("Send Message")) {
+            if(str.equals("Send")) {
                 msg.senderID = jtf1.getText();
 
                 msg.msgText = jtf2.getText();
                 jtf2.setText("");
 
                 if(!msg.senderID.equals("") && !msg.msgText.equals("")) {
+                    sendData();
+                } else {
+                    jtf3.setText("Message was not sent, type a message");
+                }
+            }
+
+            // todo: 在这写发送p2p信息
+            if (str.equals("Send Privately")){
+                msg.senderID = jtf1.getText();
+
+                msg.receiverID = jtf7.getText();
+                jtf7.setText("");
+
+                msg.msgText = jtf6.getText();
+                jtf6.setText("");
+
+                if(!msg.senderID.equals("") && !msg.receiverID.equals("") && !msg.msgText.equals("")) {
                     sendData();
                 } else {
                     jtf3.setText("Message was not sent, type a message");
@@ -165,6 +183,7 @@ class Client extends JFrame implements ActionListener,Runnable {
                         jtf4.setEditable(false);
                         jtf5.setEditable(false);
                         jtf1.setEditable(false);
+                        jtf7.setEnabled(true);
                         jtf6.setEnabled(true);
                         jb4.setEnabled(true);
 
@@ -213,6 +232,7 @@ class Client extends JFrame implements ActionListener,Runnable {
             jtf4.setEditable(true);
             jtf5.setEditable(true);
             jtf1.setEditable(true);
+            jtf7.setEnabled(true);
             jtf6.setEnabled(false);
             jb4.setEnabled(false);
             jtf3.setText("Connection Lost");
