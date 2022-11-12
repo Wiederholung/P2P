@@ -33,13 +33,15 @@ class Client extends JFrame implements ActionListener,Runnable {
         add(jtf4);
         jtf4.setText("127.0.0.1");
 
-        add(new JLabel("                          "));
+        add(new JLabel("                    "));
 
         l6 = new JLabel("Enter Port : ");
         add(l6);
         jtf5 = new JTextField(15);
         add(jtf5);
         jtf5.setText("5001");
+
+        add(new JLabel("                    "));
 
         l1 = new JLabel("Account ID :  ");
         add(l1);
@@ -55,32 +57,32 @@ class Client extends JFrame implements ActionListener,Runnable {
         jb3.addActionListener(this);
         jb3.setEnabled(false);
 
-        add(new JLabel("                                        "));
+        add(new JLabel("                       "));
 
         l2 = new JLabel("Message : ");
         add(l2);
-        jtf2 = new JTextField(35);
+        jtf2 = new JTextField(40);
         add(jtf2);
         jtf2.setEditable(false);
 
-        jb = new JButton("Send Message");
+        jb = new JButton("Send");
         add(jb);
         jb.addActionListener(this);
         jb.setEnabled(false);
 
-        l8 = new JLabel("Private Message to : ");
+        l8 = new JLabel("Private Message to :");
         add(l8);
-        jtf7 = new JTextField(10);
+        jtf7 = new JTextField(5);
         add(jtf7);
         jtf7.setEditable(false);
 
-        l7 = new JLabel("Private Message : ");
+        l7 = new JLabel("Private Message :");
         add(l7);
-        jtf6 = new JTextField(35);
+        jtf6 = new JTextField(23);
         add(jtf6);
         jtf6.setEditable(false);
 
-        jb4 = new JButton("Send Privately");
+        jb4 = new JButton("Send");
         add(jb4);
         jb4.addActionListener(this);
         jb4.setEnabled(false);
@@ -90,17 +92,17 @@ class Client extends JFrame implements ActionListener,Runnable {
         jtf3 = new JLabel("Not connected to the server...");
         add(jtf3);
 
-        add(new JLabel("                                                                            "));
-
-        l4 = new JLabel("Recieved Messages : ");
-        add(l4);
-        ta = new TextArea("",15,80);
+//        add(new JLabel(" \n "));
+//
+//        l4 = new JLabel("Received Messages : ");
+//        add(l4);
+        ta = new TextArea("",12,80);
         add(ta);
         ta.setFont(Font.getFont("verdana"));
-        ta.setBackground(Color.ORANGE);
+        ta.setBackground(Color.WHITE);
         ta.setEditable(false);
 
-        jtf3.setText("Not connected to Server, click connect");
+        jtf3.setText("Not connected to Server, click 'Connect'");
     }
 
     public void actionPerformed(ActionEvent ae) {

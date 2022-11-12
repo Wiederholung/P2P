@@ -92,7 +92,7 @@ class Ser extends JFrame implements ActionListener,Runnable{
 
 
 
-        ta = new TextArea("",18,75);
+        ta = new TextArea("",18,90);
         ta.setEditable(false);
         ta.setBackground(Color.WHITE);
         ta.setFont(Font.getFont("verdana"));
