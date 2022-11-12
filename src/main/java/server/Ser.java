@@ -122,6 +122,7 @@ class Ser extends JFrame implements ActionListener,Runnable{
 
                         flag.count = 0;
 
+                        // TODO: 创建5个socket
                         count = new Socket[5];
                         cj = 5;
                         cl = 0;
@@ -169,12 +170,13 @@ class Ser extends JFrame implements ActionListener,Runnable{
             }
             try{
                 Socket client = server.accept();
-
+                // TODO: 循环接收消息对象
                 ObjectInputStream obj = new ObjectInputStream(client.getInputStream());
                 msg = (ClientMessage) obj.readObject();
 
                 ta.append(msg.senderID+" >> "+msg.msgText+"\n");
 
+                // TODO: 将正在连接的socket加入到count数组
                 if( cl < cj) {
                     count[cl] = client;
                     cl++;
@@ -194,11 +196,24 @@ class Ser extends JFrame implements ActionListener,Runnable{
                 }
                 flag.count = cl;
 
+                // 将所用客户发送的 msg 对象保存至 msg_all 数组
+                ObjectInputStream[] obj_all = new ObjectInputStream[flag.count];
+                ClientMessage[] msg_all = new ClientMessage[flag.count];
                 for(int i = 0; i < flag.count; i++) {
-                    try{
-                        ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
-                        objw.writeObject(msg);
-                    }catch(Exception e) {}
+                    obj_all[i] = new ObjectInputStream(count[i].getInputStream());
+                    msg_all[i] = (ClientMessage) obj_all[i].readObject();
+                }
+
+                // TODO: 将消息对象发送给对应的socket
+                for(int i = 0; i < flag.count; i++) {
+                    if (msg_all[i].senderID.equals(msg.receiverID)) {
+                        try {
+                            ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
+                            objw.writeObject(msg);
+                        } catch (Exception e) {
+
+                        }
+                    }
                 }
 
                 new NewThread(client, msg, flag, count, this, server);

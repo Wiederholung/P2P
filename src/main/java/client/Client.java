@@ -171,6 +171,7 @@ class Client extends JFrame implements ActionListener,Runnable {
                     if(!jtf1.getText().equals("")) {
                         socket = new Socket(host,Integer.parseInt(p));
 
+                        // TODO: 发送上线成功
                         ObjectOutputStream obj = new ObjectOutputStream(socket.getOutputStream());
                         msg.senderID = jtf1.getText();
                         msg.msgText = " is now online at " + new Date().toString();
@@ -201,6 +202,7 @@ class Client extends JFrame implements ActionListener,Runnable {
         }
     }
 
+    // TODO: 发送完整消息对象
     public void sendData() {
         try {
             ObjectOutputStream obj = new ObjectOutputStream(socket.getOutputStream());
@@ -216,8 +218,10 @@ class Client extends JFrame implements ActionListener,Runnable {
 
 
     public void run() {
+        // TODO: 循环接收消息
         try{
             while(true) {
+                // TODO: 接收完整消息对象
                 ObjectInputStream obj = new ObjectInputStream(socket.getInputStream());
                 ClientMessage msg = new ClientMessage();
                 msg = (ClientMessage) obj.readObject();
