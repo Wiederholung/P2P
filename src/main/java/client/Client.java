@@ -74,13 +74,13 @@ class Client extends JFrame implements ActionListener,Runnable {
         add(l8);
         jtf7 = new JTextField(5);
         add(jtf7);
-        jtf7.setEditable(false);
+//        jtf7.setEditable(false);
 
         l7 = new JLabel("Private Message :");
         add(l7);
         jtf6 = new JTextField(17);
         add(jtf6);
-        jtf6.setEditable(false);
+//        jtf6.setEditable(false);
 
         jb4 = new JButton("Send Privately");
         add(jb4);
@@ -152,7 +152,7 @@ class Client extends JFrame implements ActionListener,Runnable {
                 if(!msg.senderID.equals("") && !msg.receiverID.equals("") && !msg.msgText.equals("")) {
                     sendData();
                 } else {
-                    jtf3.setText("Message was not sent, type a message");
+                    jtf3.setText("Message was not sent, check your inputs");
                 }
             }
 
@@ -232,7 +232,7 @@ class Client extends JFrame implements ActionListener,Runnable {
             jtf4.setEditable(true);
             jtf5.setEditable(true);
             jtf1.setEditable(true);
-            jtf7.setEnabled(true);
+            jtf7.setEnabled(false);
             jtf6.setEnabled(false);
             jb4.setEnabled(false);
             jtf3.setText("Connection Lost");
