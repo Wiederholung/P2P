@@ -26,6 +26,8 @@ class Ser extends JFrame implements ActionListener,Runnable{
     int cj = 5;
     int cl = 0;
 
+//    String[] commands = new String[];
+
     Ser(String s) {
         super(s);
 
@@ -64,30 +66,30 @@ class Ser extends JFrame implements ActionListener,Runnable{
 
 
 
-        showList = new JButton("Show List");
-        showList.addActionListener(this);
-        add(showList);
-        showList.setEnabled(false); //默认不能点击
-
-        JLabel l5 = new JLabel("Enter Kick ID : ");
-        add(l5);
-        jtf3 = new JTextField(10);
-        add(jtf3);
-
-        kick = new JButton("Kick");
-        kick.addActionListener(this);
-        add(kick);
-        kick.setEnabled(false); //默认不能点击
-
-        JLabel l6 = new JLabel("Enter Stats ID : ");
-        add(l6);
-        jtf4 = new JTextField(10);
-        add(jtf4);
-
-        showStats = new JButton("Show Stats");
-        showStats.addActionListener(this);
-        add(showStats);
-        showStats.setEnabled(false); //默认不能点击
+//        showList = new JButton("Show List");
+//        showList.addActionListener(this);
+//        add(showList);
+//        showList.setEnabled(false); //默认不能点击
+//
+//        JLabel l5 = new JLabel("Enter Kick ID : ");
+//        add(l5);
+//        jtf3 = new JTextField(10);
+//        add(jtf3);
+//
+//        kick = new JButton("Kick");
+//        kick.addActionListener(this);
+//        add(kick);
+//        kick.setEnabled(false); //默认不能点击
+//
+//        JLabel l6 = new JLabel("Enter Stats ID : ");
+//        add(l6);
+//        jtf4 = new JTextField(10);
+//        add(jtf4);
+//
+//        showStats = new JButton("Show Stats");
+//        showStats.addActionListener(this);
+//        add(showStats);
+//        showStats.setEnabled(false); //默认不能点击
 
 
 
@@ -116,9 +118,9 @@ class Ser extends JFrame implements ActionListener,Runnable{
 
                         startSever.setEnabled(false);
                         stopSever.setEnabled(true);
-                        showList.setEnabled(true);
-                        kick.setEnabled(true);
-                        showStats.setEnabled(true);
+//                        showList.setEnabled(true);
+//                        kick.setEnabled(true);
+//                        showStats.setEnabled(true);
 
                         flag.count = 0;
 
@@ -147,9 +149,9 @@ class Ser extends JFrame implements ActionListener,Runnable{
 
                 startSever.setEnabled(true);
                 stopSever.setEnabled(false);
-                showList.setEnabled(false);
-                kick.setEnabled(false);
-                showStats.setEnabled(false);
+//                showList.setEnabled(false);
+//                kick.setEnabled(false);
+//                showStats.setEnabled(false);
 
                 server = null;
                 t = null;
@@ -161,21 +163,21 @@ class Ser extends JFrame implements ActionListener,Runnable{
                 }
             }
 
-            if(str.equals("Kick")) {
-                String name = jtf3.getText();
-                msg.senderID = jtf3.getText();
-                jtf3.setText("");
-
-                ta.append(name + " is kicked\n");
-                msg.msgText = " is kicked";
-
-                for(int i = 0; i < flag.count; i++) {
-                    try{
-                        ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
-                        objw.writeObject(msg);
-                    }catch(Exception ex) {}
-                }
-            }
+//            if(str.equals("Kick")) {
+//                String name = jtf3.getText();
+//                msg.senderID = jtf3.getText();
+//                jtf3.setText("");
+//
+//                ta.append(name + " is kicked\n");
+//                msg.msgText = " is kicked";
+//
+//                for(int i = 0; i < flag.count; i++) {
+//                    try{
+//                        ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
+//                        objw.writeObject(msg);
+//                    }catch(Exception ex) {}
+//                }
+//            }
 
         } catch(Exception ex) {}
     }

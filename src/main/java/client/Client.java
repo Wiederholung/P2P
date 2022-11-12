@@ -13,13 +13,13 @@ import java.util.Date;
 class Client extends JFrame implements ActionListener,Runnable {
     Socket socket = null;
     JLabel l1, l2, l3, l4, l5, l6, jtf3, l7, l8;
-    JTextField jtf1, jtf2, jtf4, jtf5, jtf6, jtf7;
+    JTextField jtf1, jtf2, jtf4, jtf5, jtf6, jtf7, jtf8, jtf9;
     TextArea ta;
     ClientMessage msg = new ClientMessage();
     InetAddress host;
     int port = 5001;
     Thread t = null;
-    JButton jb,jb2,jb3, jb4;
+    JButton jb,jb2,jb3, jb4, showList, kick, showStats;
 
     Client(String s) {
         super(s);
@@ -87,15 +87,38 @@ class Client extends JFrame implements ActionListener,Runnable {
         jb4.addActionListener(this);
         jb4.setEnabled(false);
 
+
+        showList = new JButton("Show List");
+        showList.addActionListener(this);
+        add(showList);
+        showList.setEnabled(false); //默认不能点击
+
+        JLabel l5 = new JLabel("Enter Kick ID : ");
+        add(l5);
+        jtf8 = new JTextField(10);
+        add(jtf8);
+
+        kick = new JButton("Kick");
+        kick.addActionListener(this);
+        add(kick);
+        kick.setEnabled(false); //默认不能点击
+
+        JLabel l6 = new JLabel("Enter Stats ID : ");
+        add(l6);
+        jtf9 = new JTextField(10);
+        add(jtf9);
+
+        showStats = new JButton("Show Stats");
+        showStats.addActionListener(this);
+        add(showStats);
+        showStats.setEnabled(false); //默认不能点击
+
+
         l3 = new JLabel("Status : ");
         add(l3);
         jtf3 = new JLabel("Not connected to the server...");
         add(jtf3);
 
-//        add(new JLabel(" \n "));
-//
-//        l4 = new JLabel("Received Messages : ");
-//        add(l4);
         ta = new TextArea("",12,80);
         add(ta);
         ta.setFont(Font.getFont("verdana"));
@@ -121,6 +144,13 @@ class Client extends JFrame implements ActionListener,Runnable {
                     jtf7.setEnabled(false);
                     jtf6.setEnabled(false);
                     jb4.setEnabled(false);
+
+                    showList.setEnabled(false);
+                    kick.setEnabled(false);
+                    showStats.setEnabled(false);
+                    jtf8.setEnabled(false);
+                    jtf9.setEnabled(false);
+
                     socket.close();
                     socket = null;
                 } catch(Exception e) {}
@@ -188,6 +218,12 @@ class Client extends JFrame implements ActionListener,Runnable {
                         jtf6.setEnabled(true);
                         jb4.setEnabled(true);
 
+                        showList.setEnabled(true);
+                        kick.setEnabled(true);
+                        showStats.setEnabled(true);
+                        jtf8.setEnabled(true);
+                        jtf9.setEnabled(true);
+
                         jtf3.setText("Connection established with Server, start chatting");
 
                         t = new Thread(this,"Reading");
@@ -197,6 +233,18 @@ class Client extends JFrame implements ActionListener,Runnable {
                     jtf3.setText("Could not connect to Server, connect again");
                 }
             }
+
+            if(str.equals("Kick")) {
+                msg.senderID = jtf1.getText();
+                msg.receiverID = jtf8.getText();
+                jtf3.setText("");
+
+                ta.append(msg.receiverID + " is kicked\n");
+                msg.msgText = " is kicked";
+
+                sendData();
+            }
+
         } catch(Exception e) {
             jtf3.setText("Action Error");
         }
@@ -228,7 +276,7 @@ class Client extends JFrame implements ActionListener,Runnable {
                 if(msg.senderID != null && msg.msgText != null) {
                     System.out.println("1"+msg.senderID);
                     System.out.println(jtf1.getText());
-                    if(msg.senderID.equals(jtf1.getText()) && msg.msgText.equals(" is kicked")){
+                    if(msg.receiverID.equals(jtf1.getText()) && msg.msgText.equals(" is kicked")){
                         ta.append("You have been kicked offline");
                         socket.close();
                         socket = null;
@@ -248,6 +296,13 @@ class Client extends JFrame implements ActionListener,Runnable {
             jtf7.setEnabled(false);
             jtf6.setEnabled(false);
             jb4.setEnabled(false);
+
+            showList.setEnabled(false);
+            kick.setEnabled(false);
+            showStats.setEnabled(false);
+            jtf8.setEnabled(false);
+            jtf9.setEnabled(false);
+
             jtf3.setText("Connection Lost");
         }
     }
