@@ -13,8 +13,8 @@ import java.net.Socket;
 
 class Ser extends JFrame implements ActionListener,Runnable{
     Thread t;
-    JButton startSever, stopSever;
-    JTextField jtf2;
+    JButton startSever, stopSever, showList, kick, showStats;
+    JTextField jtf2, jtf3, jtf4;
     JLabel jlabel;
     TextArea ta;
 
@@ -36,7 +36,7 @@ class Ser extends JFrame implements ActionListener,Runnable{
         add(l3);
 
         jtf2 = new JTextField(7);
-        jtf2.setText("5000");
+        jtf2.setText("5001");
         add(jtf2);
 
         JLabel l1 = new JLabel("Start the Server");
@@ -62,6 +62,36 @@ class Ser extends JFrame implements ActionListener,Runnable{
         jlabel = new JLabel("Server is not running...");
         add(jlabel);
 
+
+
+        showList = new JButton("Show List");
+        showList.addActionListener(this);
+        add(showList);
+        showList.setEnabled(false); //默认不能点击
+
+        JLabel l5 = new JLabel("Enter Kick ID : ");
+        add(l5);
+        jtf3 = new JTextField(10);
+        add(jtf3);
+
+        kick = new JButton("Kick");
+        kick.addActionListener(this);
+        add(kick);
+        kick.setEnabled(false); //默认不能点击
+
+        JLabel l6 = new JLabel("Enter Stats ID : ");
+        add(l6);
+        jtf4 = new JTextField(10);
+        add(jtf4);
+
+        showStats = new JButton("Show Stats");
+        showStats.addActionListener(this);
+        add(showStats);
+        showStats.setEnabled(false); //默认不能点击
+
+
+
+
         ta = new TextArea("",18,75);
         ta.setEditable(false);
         ta.setBackground(Color.WHITE);
@@ -86,6 +116,9 @@ class Ser extends JFrame implements ActionListener,Runnable{
 
                         startSever.setEnabled(false);
                         stopSever.setEnabled(true);
+                        showList.setEnabled(true);
+                        kick.setEnabled(true);
+                        showStats.setEnabled(true);
 
                         flag.count = 0;
 
@@ -110,8 +143,13 @@ class Ser extends JFrame implements ActionListener,Runnable{
                 }
                 jlabel.setText("Server is closed");
                 jtf2.setEnabled(true);
+
                 startSever.setEnabled(true);
                 stopSever.setEnabled(false);
+                showList.setEnabled(false);
+                kick.setEnabled(false);
+                showStats.setEnabled(false);
+
                 server = null;
                 t = null;
 

@@ -12,14 +12,14 @@ import java.util.Date;
 
 class Client extends JFrame implements ActionListener,Runnable {
     Socket socket = null;
-    JLabel l1,l2,l3,l4,l5,l6,jtf3;
-    JTextField jtf1,jtf2,jtf4,jtf5;
+    JLabel l1, l2, l3, l4, l5, l6, jtf3, l7, l8;
+    JTextField jtf1, jtf2, jtf4, jtf5, jtf6, jtf7;
     TextArea ta;
     ClientMessage msg = new ClientMessage();
     InetAddress host;
     int port = 5000;
     Thread t = null;
-    JButton jb,jb2,jb3;
+    JButton jb,jb2,jb3, jb4;
 
     Client(String s) {
         super(s);
@@ -67,6 +67,23 @@ class Client extends JFrame implements ActionListener,Runnable {
         add(jb);
         jb.addActionListener(this);
         jb.setEnabled(false);
+
+        l8 = new JLabel("Private Message to : ");
+        add(l8);
+        jtf7 = new JTextField(15);
+        add(jtf7);
+        jtf7.setEditable(false);
+
+        l7 = new JLabel("Private Message : ");
+        add(l7);
+        jtf6 = new JTextField(25);
+        add(jtf6);
+        jtf6.setEditable(false);
+
+        jb4 = new JButton("Send Private Message");
+        add(jb4);
+        jb4.addActionListener(this);
+        jb4.setEnabled(false);
 
         l3 = new JLabel("Status : ");
         add(l3);
@@ -169,7 +186,7 @@ class Client extends JFrame implements ActionListener,Runnable {
             msg.senderID = "";
             msg.msgText = "";
         } catch(Exception e) {
-            jtf3.setText("Error occured while sending message");}
+            jtf3.setText("Error occurred while sending message");}
     }
 
 
