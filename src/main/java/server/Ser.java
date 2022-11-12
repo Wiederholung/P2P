@@ -212,20 +212,26 @@ class Ser extends JFrame implements ActionListener,Runnable{
                 cl++;
                 flag.count = cl;
 
-//                // 将所用客户发送的 msg 对象保存至 msg_all 数组
-//                ObjectInputStream[] obj_all = new ObjectInputStream[flag.count];
+                // 将所用客户发送的 msg 对象保存至 msg_all 数组
+//                ObjectInputStream[] objr_all = new ObjectInputStream[flag.count];
 //                ClientMessage[] msg_all = new ClientMessage[flag.count];
 //                for(int i = 0; i < flag.count; i++) {
-//                    obj_all[i] = new ObjectInputStream(count[i].getInputStream());
-//                    msg_all[i] = (ClientMessage) obj_all[i].readObject();
+//                    objr_all[i] = new ObjectInputStream(count[i].getInputStream());
+//                    msg_all[i] = (ClientMessage) objr_all[i].readObject();
 //                }
 
                 // TODO: 将消息对象发送给对应的socket
                 for(int i = 0; i < flag.count; i++) {
+//                    if (msg_all[i].senderID.equals(msg.receiverID)) {
                     if (true) {
                         try {
-                            ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
-                            objw.writeObject(msg);
+                            ClientMessage m = (ClientMessage) new ObjectInputStream(count[i].getInputStream()).readObject();
+                            if (m.senderID.equals(msg.receiverID)) {
+                                System.out.println("send from " + m.senderID);
+                                System.out.println("send  " + m.msgText);
+                                ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
+                                objw.writeObject(msg);
+                            }
                         } catch (Exception e) {
 
                         }

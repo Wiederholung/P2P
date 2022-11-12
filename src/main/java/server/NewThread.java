@@ -41,8 +41,11 @@ class NewThread implements Runnable {
 
                 for(int i = 0; i < flag.count; i++) {
                     try{
-                        ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
-                        objw.writeObject(msg);
+                        ClientMessage m = (ClientMessage) new ObjectInputStream(count[i].getInputStream()).readObject();
+                        if (m.senderID.equals(msg.receiverID)) {
+                            ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
+                            objw.writeObject(msg);
+                        }
                     }catch(Exception e) {}
                 }
             }
