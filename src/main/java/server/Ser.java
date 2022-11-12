@@ -160,6 +160,23 @@ class Ser extends JFrame implements ActionListener,Runnable{
                     } catch(Exception e) {}
                 }
             }
+
+            if(str.equals("Kick")) {
+                String name = jtf3.getText();
+                msg.senderID = jtf3.getText();
+                jtf3.setText("");
+
+                ta.append(name + " is kicked\n");
+                msg.msgText = " is kicked";
+
+                for(int i = 0; i < flag.count; i++) {
+                    try{
+                        ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
+                        objw.writeObject(msg);
+                    }catch(Exception ex) {}
+                }
+            }
+
         } catch(Exception ex) {}
     }
 
@@ -174,12 +191,11 @@ class Ser extends JFrame implements ActionListener,Runnable{
                 ObjectInputStream obj = new ObjectInputStream(client.getInputStream());
                 msg = (ClientMessage) obj.readObject();
 
-                ta.append(msg.senderID+" >> "+msg.msgText+"\n");
+                ta.append(msg.senderID+" >>>> "+msg.msgText+"\n");
 
                 // TODO: 将正在连接的socket加入到count数组
-                if( cl < cj) {
+                if(cl < cj) {
                     count[cl] = client;
-                    cl++;
                 } else {
                     Socket temp[] = new Socket[cj];
                     for(int i = 0; i < cj; i++) {
@@ -192,21 +208,21 @@ class Ser extends JFrame implements ActionListener,Runnable{
                     }
                     count[cj] = client;
                     cj = cj + 5;
-                    cl++;
                 }
+                cl++;
                 flag.count = cl;
 
-                // 将所用客户发送的 msg 对象保存至 msg_all 数组
-                ObjectInputStream[] obj_all = new ObjectInputStream[flag.count];
-                ClientMessage[] msg_all = new ClientMessage[flag.count];
-                for(int i = 0; i < flag.count; i++) {
-                    obj_all[i] = new ObjectInputStream(count[i].getInputStream());
-                    msg_all[i] = (ClientMessage) obj_all[i].readObject();
-                }
+//                // 将所用客户发送的 msg 对象保存至 msg_all 数组
+//                ObjectInputStream[] obj_all = new ObjectInputStream[flag.count];
+//                ClientMessage[] msg_all = new ClientMessage[flag.count];
+//                for(int i = 0; i < flag.count; i++) {
+//                    obj_all[i] = new ObjectInputStream(count[i].getInputStream());
+//                    msg_all[i] = (ClientMessage) obj_all[i].readObject();
+//                }
 
                 // TODO: 将消息对象发送给对应的socket
                 for(int i = 0; i < flag.count; i++) {
-                    if (msg_all[i].senderID.equals(msg.receiverID)) {
+                    if (true) {
                         try {
                             ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
                             objw.writeObject(msg);

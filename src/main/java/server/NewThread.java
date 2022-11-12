@@ -30,7 +30,7 @@ class NewThread implements Runnable {
     public void run() {
         String name = msg.senderID;
         try {
-            while(server.isClosed()!=true) {
+            while(!server.isClosed()) {
                 ObjectInputStream obj = new ObjectInputStream(client.getInputStream());
                 msg = (ClientMessage)obj.readObject();
 
@@ -55,7 +55,7 @@ class NewThread implements Runnable {
                 }
             }
         } catch(Exception e) {
-            f.ta.append(name+" is offline\n");
+            f.ta.append(name + " is offline\n");
             try {
                 msg.msgText = " is offline\n";
                 for(int i = 0; i < flag.count; i++) {

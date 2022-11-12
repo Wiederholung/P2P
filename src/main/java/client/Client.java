@@ -139,7 +139,7 @@ class Client extends JFrame implements ActionListener,Runnable {
                 }
             }
 
-            // todo: 在这写发送p2p信息
+            // TODO: 在这写发送p2p信息
             if (str.equals("Send Privately")){
                 msg.senderID = jtf1.getText();
 
@@ -225,8 +225,17 @@ class Client extends JFrame implements ActionListener,Runnable {
                 ObjectInputStream obj = new ObjectInputStream(socket.getInputStream());
                 ClientMessage msg = new ClientMessage();
                 msg = (ClientMessage) obj.readObject();
-                if(msg.senderID!=null && msg.msgText!=null)
-                    ta.append(msg.senderID+" >> "+msg.msgText+"\n");
+                if(msg.senderID != null && msg.msgText != null) {
+                    System.out.println("1"+msg.senderID);
+                    System.out.println(jtf1.getText());
+                    if(msg.senderID.equals(jtf1.getText()) && msg.msgText.equals(" is kicked")){
+                        ta.append("You have been kicked offline");
+                        socket.close();
+                        socket = null;
+                    }else{
+                        ta.append(msg.senderID + " >> " + msg.msgText + "\n");
+                    }
+                }
             }
         } catch(Exception e) {
             jtf2.setEditable(false);
