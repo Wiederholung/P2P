@@ -2,7 +2,7 @@ package client;
 
 import java.awt.*;
 
-class demo {
+class RunClient {
     public static void main(String a[]) {
         Client f = new Client("Client");
         f.setLayout(new FlowLayout());

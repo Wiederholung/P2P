@@ -6,54 +6,73 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 class NewThread implements Runnable {
-    Thread t;
-    Socket client;
+    Thread thread;
+    NewSocket client;
     ClientMessage msg;
     Data flag;
     Socket count[];
-    Ser f;
-    ServerSocket server;
+    ArrayList<NewSocket> clients;
+    Server f;
+    ServerSocket serverSocket;
 
-    NewThread(Socket client, ClientMessage msg, Data flag, Socket count[], Ser f, ServerSocket server) {
-        t = new Thread(this,"Client");
-        this.server = server;
+    NewThread(NewSocket client, ClientMessage msg, Data flag, ArrayList<NewSocket> clients, Server f, ServerSocket server) {
+        thread = new Thread(this,"Client");
+        this.serverSocket = server;
         this.client = client;
         this.msg = msg;
         this.f = f;
         this.flag = flag;
-        this.count = count;
-        t.start();
+        this.clients = clients;
+        thread.start();
     }
 
     public void run() {
         String name = msg.senderID;
         try {
-            while(!server.isClosed()) {
-                ObjectInputStream obj = new ObjectInputStream(client.getInputStream());
+            while(!serverSocket.isClosed()) {
+                ObjectInputStream obj = new ObjectInputStream(client.socket.getInputStream());
                 msg = (ClientMessage)obj.readObject();
+
+                String senderID = msg.senderID;
+                String msgText = msg.msgText;
+                String receiverID = msg.receiverID;
+
 
                 if(msg.senderID != null && msg.msgText != null) {
                     f.ta.append(msg.senderID+ " to " + msg.receiverID + " >> "+msg.msgText+"\n"); //显示从谁发给谁
                 }
-                name = msg.senderID;
 
+//                for(int i = 0; i < flag.count; i++) {
+//                    try{
+//                        ClientMessage m = (ClientMessage) new ObjectInputStream(count[i].getInputStream()).readObject();
+//                        if (m.senderID.equals(msg.receiverID)) {
+//                            ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
+//                            objw.writeObject(msg);
+//                        }
+//                    }catch(Exception e) {}
+//                }
                 for(int i = 0; i < flag.count; i++) {
-                    try{
-                        ClientMessage m = (ClientMessage) new ObjectInputStream(count[i].getInputStream()).readObject();
-                        if (m.senderID.equals(msg.receiverID)) {
-                            ObjectOutputStream objw = new ObjectOutputStream(count[i].getOutputStream());
+                    if (receiverID.equals("All")){
+                        try{
+                            ObjectOutputStream objw = new ObjectOutputStream(clients.get(i).socket.getOutputStream());
                             objw.writeObject(msg);
-                        }
-                    }catch(Exception e) {}
+                        }catch(Exception e) {}
+                    } else if (senderID.equals(clients.get(i).ID) || receiverID.equals(clients.get(i).ID)){
+                        try{
+                            ObjectOutputStream objw = new ObjectOutputStream(clients.get(i).socket.getOutputStream());
+                            objw.writeObject(msg);
+                        }catch(Exception e) {}
+                    }
                 }
             }
 
-            if(server.isClosed()) {
+            if(serverSocket.isClosed()) {
                 for(int i = 0; i < flag.count; i++) {
                     try{
-                        count[i].close();
+                        clients.get(i).socket.close();
                     } catch(Exception e) {}
                 }
             }
@@ -67,7 +86,7 @@ class NewThread implements Runnable {
                         objw.writeObject(msg);
                     }catch(Exception ex) {}
                 }
-                client.close();
+                client.socket.close();
             } catch(Exception ex) {}
         }
     }
